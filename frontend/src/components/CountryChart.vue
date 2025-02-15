@@ -1,21 +1,18 @@
 <template>
-    <div class="bg-white rounded-lg border">
-      <div class="p-6 border-b">
-        <h2 class="text-xl font-bold text-gray-900">Country Distribution</h2>
-      </div>
-      <div class="p-6">
-        <div class="h-[300px]">
-          <Bar 
-            :data="chartData" 
-            :options="chartOptions" 
-          />
-        </div>
+  <div class="bg-white rounded-lg border">
+    <div class="p-6 border-b">
+      <h2 class="text-xl font-bold text-gray-900">Country Distribution</h2>
+    </div>
+    <div class="p-6">
+      <div class="h-[300px]">
+        <Bar :data="chartData" :options="chartOptions" />
       </div>
     </div>
+  </div>
 </template>
-  
+
 <script setup>
-  import { computed } from 'vue';
+  import { computed } from 'vue'
   import {
     Chart as ChartJS,
     CategoryScale,
@@ -24,25 +21,18 @@
     Title,
     Tooltip,
     Legend
-  } from 'chart.js';
-  import { Bar } from 'vue-chartjs';
-  
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-  
+  } from 'chart.js'
+  import { Bar } from 'vue-chartjs'
+
+  ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+
   const props = defineProps({
     countryStats: {
       type: Object,
       required: true
     }
-  });
-  
+  })
+
   const chartData = computed(() => ({
     labels: Object.keys(props.countryStats),
     datasets: [
@@ -54,8 +44,8 @@
         borderWidth: 1
       }
     ]
-  }));
-  
+  }))
+
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -86,5 +76,5 @@
         bottom: 10
       }
     }
-  };
+  }
 </script>
