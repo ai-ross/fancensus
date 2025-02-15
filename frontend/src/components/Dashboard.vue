@@ -1,25 +1,25 @@
 <template>
-  <div class="grid gap-6">
+  <div class="grid gap-4 sm:gap-6">
     <!-- Overview Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-sm font-medium text-gray-500">Total Countries</h3>
-        <p class="mt-2 text-3xl font-bold text-gray-900">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white rounded-lg shadow p-4 sm:p-6">
+        <h3 class="text-xs sm:text-sm font-medium text-gray-500">Total Countries</h3>
+        <p class="mt-2 text-2xl sm:text-3xl font-bold text-gray-900">
           {{ Object.keys(groupedByCountry).length }}
         </p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-sm font-medium text-gray-500">Total Products</h3>
-        <p class="mt-2 text-3xl font-bold text-gray-900">
+      <div class="bg-white rounded-lg shadow p-4 sm:p-6">
+        <h3 class="text-xs sm:text-sm font-medium text-gray-500">Total Products</h3>
+        <p class="mt-2 text-2xl sm:text-3xl font-bold text-gray-900">
           {{ Object.keys(groupedByProduct).length }}
         </p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-sm font-medium text-gray-500">Total Activities</h3>
-        <p class="mt-2 text-3xl font-bold text-gray-900">{{ rawData.length }}</p>
+      <div class="bg-white rounded-lg shadow p-4 sm:p-6">
+        <h3 class="text-xs sm:text-sm font-medium text-gray-500">Total Activities</h3>
+        <p class="mt-2 text-2xl sm:text-3xl font-bold text-gray-900">{{ rawData.length }}</p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-sm font-medium text-gray-500">Latest Update</h3>
+      <div class="bg-white rounded-lg shadow p-4 sm:p-6">
+        <h3 class="text-xs sm:text-sm font-medium text-gray-500">Latest Update</h3>
         <p class="mt-2 text-xl font-bold text-gray-900">
           {{ latestUpdate }}
         </p>
@@ -29,13 +29,13 @@
     <!-- Tabs -->
     <div class="bg-white rounded-lg shadow">
       <div class="border-b border-gray-200">
-        <nav class="flex -mb-px">
+        <nav class="flex flex-col sm:flex-row -mb-px">
           <button
             v-for="tab in tabs"
             :key="tab.id"
             @click="currentTab = tab.id"
             :class="[
-              'px-6 py-4 text-sm font-medium',
+              'px-4 py-3 text-sm font-medium w-full sm:w-auto text-center',
               currentTab === tab.id
                 ? 'border-b-2 border-blue-500 text-blue-600'
                 : 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -47,25 +47,25 @@
       </div>
 
       <!-- Required Visualizations -->
-      <div v-if="currentTab === 'required'" class="p-6">
-        <div class="grid gap-6">
+      <div v-if="currentTab === 'required'" class="p-4 sm:p-6">
+        <div class="grid grid-cols-1 gap-6">
           <!-- Country Distribution -->
-          <CountryChart :countryStats="countryStats" class="bg-white rounded-lg border" />
+          <CountryChart :countryStats="countryStats" class="bg-white rounded-lg border w-full" />
 
           <!-- Tables Section -->
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Country Table -->
             <div class="bg-white rounded-lg border">
-              <div class="p-6 border-b">
-                <h2 class="text-lg font-bold text-gray-900">Activities by Country</h2>
+              <div class="p-4 sm:p-6 border-b">
+                <h2 class="text-base sm:text-lg font-bold text-gray-900">Activities by Country</h2>
               </div>
               <CountryTable :groupedData="groupedByCountry" @show-details="showDrillDown" />
             </div>
 
             <!-- Product Table -->
             <div class="bg-white rounded-lg border">
-              <div class="p-6 border-b">
-                <h2 class="text-lg font-bold text-gray-900">Activities by Product</h2>
+              <div class="p-4 sm:p-6 border-b">
+                <h2 class="text-base sm:text-lg font-bold text-gray-900">Activities by Product</h2>
               </div>
               <ProductTable :groupedData="groupedByProduct" />
             </div>
@@ -74,13 +74,13 @@
       </div>
 
       <!-- Additional Visualizations -->
-      <div v-if="currentTab === 'additional'" class="p-6">
-        <div class="grid gap-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <ActivityTimeline :data="rawData" class="bg-white rounded-lg border" />
-            <ProductDistribution :data="rawData" class="bg-white rounded-lg border" />
+      <div v-if="currentTab === 'additional'" class="p-4 sm:p-6">
+        <div class="grid grid-cols-1 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ActivityTimeline :data="rawData" class="bg-white rounded-lg border w-full" />
+            <ProductDistribution :data="rawData" class="bg-white rounded-lg border w-full" />
           </div>
-          <NewsSourceDistribution :data="rawData" class="bg-white rounded-lg border" />
+          <NewsSourceDistribution :data="rawData" class="bg-white rounded-lg border w-full" />
         </div>
       </div>
     </div>
