@@ -14,45 +14,55 @@ export interface CountryStats {
 export default function useDataTransformation() {
   const rawData = ref<DataItem[]>([])
 
-  const groupedByCountry = computed(() => {
-    const groups: { [key: string]: DataItem[] } = {}
-    rawData.value.forEach((item) => {
-      if (!groups[item.countrycode]) {
-        groups[item.countrycode] = []
+  const groupedByCountry = computed<{ [key: string]: DataItem[] }>(() => {
+    return rawData.value.reduce((groups, item) => {
+      const countryCode = item.countrycode
+      if (!groups[countryCode]) {
+        groups[countryCode] = []
       }
-      groups[item.countrycode].push(item)
-    })
-    return groups
+      groups[countryCode].push(item)
+      return groups
+    }, {} as { [key: string]: DataItem[] })
   })
 
-  const groupedByProduct = computed(() => {
-    const groups: { [key: string]: DataItem[] } = {}
-    rawData.value.forEach((item) => {
-      if (!groups[item.product]) {
-        groups[item.product] = []
+  const groupedByProduct = computed<GroupedByProduct[]>(() => {
+    const groups = rawData.value.reduce((acc, item) => {
+      if (!acc[item.product]) {
+        acc[item.product] = { 
+          product: item.product, 
+          count: 0, 
+          items: [] 
+        }
       }
-      groups[item.product].push(item)
-    })
-    return Object.entries(groups).map(([product, items]) => ({
-      product,
-      count: items.length,
-      items
-    }))
+      acc[item.product].count++
+      acc[item.product].items.push(item)
+      return acc
+    }, {} as { [key: string]: GroupedByProduct })
+
+    return Object.values(groups).sort((a, b) => b.count - a.count)
   })
 
-  const countryStats = computed(() => {
-    const stats: CountryStats = {}
-    rawData.value.forEach((item) => {
-      if (!stats[item.countrycode]) {
-        stats[item.countrycode] = 0
-      }
-      stats[item.countrycode]++
-    })
-    return stats
+  const countryStats = computed<CountryStats>(() => {
+    return rawData.value.reduce((stats, item) => {
+      stats[item.countrycode] = (stats[item.countrycode] || 0) + 1
+      return stats
+    }, {} as CountryStats)
+  })
+
+  const latestUpdate = computed<string>(() => {
+    if (rawData.value.length === 0) return 'No data'
+    
+    const dates = rawData.value.map(item => new Date(item.date).getTime())
+    const latest = new Date(Math.max(...dates))
+    return latest.toLocaleDateString()
   })
 
   const setData = (data: DataItem[]) => {
     rawData.value = data
+  }
+
+  const clearData = () => {
+    rawData.value = []
   }
 
   return {
@@ -60,6 +70,8 @@ export default function useDataTransformation() {
     groupedByCountry,
     groupedByProduct,
     countryStats,
-    setData
+    latestUpdate,
+    setData,
+    clearData
   }
 }
