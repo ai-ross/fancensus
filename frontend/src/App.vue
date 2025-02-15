@@ -3,7 +3,11 @@
     <!-- Header -->
     <header class="bg-white shadow">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Data Dashboard</h1>
+        <h1
+          class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 text-center sm:text-left"
+        >
+          Data Dashboard
+        </h1>
       </div>
     </header>
 
@@ -12,17 +16,17 @@
       <!-- Error handling -->
       <div
         v-if="error"
-        class="bg-red-100 border border-red-400 text-red-800 px-4 py-3 rounded mb-4 font-medium"
+        class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-center font-medium"
       >
         {{ error }}
       </div>
 
       <!-- Loading state -->
-      <div v-if="loading" class="text-center py-8 text-gray-900 font-medium">
+      <div v-if="loading" class="flex flex-col items-center justify-center py-8">
         <div
-          class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"
+          class="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-gray-900 mb-4"
         ></div>
-        Loading...
+        <p class="text-gray-900 font-medium text-sm sm:text-base">Loading...</p>
       </div>
 
       <Dashboard
