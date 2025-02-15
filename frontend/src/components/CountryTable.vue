@@ -30,13 +30,18 @@
   </div>
 </template>
 
-<script setup>
-  defineProps({
-    groupedData: {
-      type: Object,
-      required: true
-    }
-  })
+<script setup lang="ts">
+  import type { DataItem } from '@/services/api'
 
-  defineEmits(['show-details'])
+  interface GroupedData {
+    [key: string]: DataItem[]
+  }
+
+  defineProps<{
+    groupedData: GroupedData
+  }>()
+
+  defineEmits<{
+    'show-details': [items: DataItem[]]
+  }>()
 </script>

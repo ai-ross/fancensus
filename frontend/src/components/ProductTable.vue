@@ -17,11 +17,10 @@
   </div>
 </template>
 
-<script setup>
-  defineProps({
-    groupedData: {
-      type: Array,
-      required: true
-    }
-  })
+<script setup lang="ts">
+  import type { GroupedByProduct } from '@/composables/useDataTransformation'
+
+  defineProps<{
+    groupedData: GroupedByProduct[]
+  }>()
 </script>

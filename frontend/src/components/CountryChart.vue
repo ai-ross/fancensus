@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from 'vue'
   import {
     Chart as ChartJS,
@@ -22,18 +22,17 @@
     Tooltip,
     Legend
   } from 'chart.js'
+  import type { ChartData, ChartOptions } from 'chart.js'
   import { Bar } from 'vue-chartjs'
+  import type { CountryStats } from '@/composables/useDataTransformation'
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-  const props = defineProps({
-    countryStats: {
-      type: Object,
-      required: true
-    }
-  })
+  const props = defineProps<{
+    countryStats: CountryStats
+  }>()
 
-  const chartData = computed(() => ({
+  const chartData = computed<ChartData<'bar'>>(() => ({
     labels: Object.keys(props.countryStats),
     datasets: [
       {
@@ -46,13 +45,18 @@
     ]
   }))
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
-        padding: 10
+        labels: {
+          padding: 10,
+          font: {
+            size: 12
+          }
+        }
       },
       title: {
         display: true,
@@ -60,6 +64,10 @@
         padding: {
           top: 10,
           bottom: 10
+        },
+        font: {
+          size: 16,
+          weight: 'bold'
         }
       }
     },
@@ -69,11 +77,6 @@
         ticks: {
           stepSize: 1
         }
-      }
-    },
-    layout: {
-      padding: {
-        bottom: 10
       }
     }
   }

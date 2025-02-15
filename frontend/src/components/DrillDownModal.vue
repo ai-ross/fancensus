@@ -1,10 +1,6 @@
 <template>
-  <div
-    v-if="show"
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-    @click="$emit('close')"
-  >
-    <div class="bg-white rounded-lg max-w-3xl w-full max-h-[80vh] flex flex-col" @click.stop>
+  <div v-if="show" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg max-w-3xl w-full max-h-[80vh] flex flex-col">
       <!-- Fixed header -->
       <div
         class="flex justify-between items-center p-6 border-b bg-white rounded-t-lg sticky top-0"
@@ -49,15 +45,19 @@
   </div>
 </template>
 
-<script setup>
-  const props = defineProps({
-    show: Boolean,
-    items: Array
-  })
+<script setup lang="ts">
+  import type { DataItem } from '@/services/api'
 
-  defineEmits(['close'])
+  defineProps<{
+    show: boolean
+    items: DataItem[]
+  }>()
 
-  const formatDate = (dateString) => {
+  defineEmits<{
+    close: []
+  }>()
+
+  const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString()
   }
 </script>
