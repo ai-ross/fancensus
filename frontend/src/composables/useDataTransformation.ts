@@ -15,29 +15,35 @@ export default function useDataTransformation() {
   const rawData = ref<DataItem[]>([])
 
   const groupedByCountry = computed<{ [key: string]: DataItem[] }>(() => {
-    return rawData.value.reduce((groups, item) => {
-      const countryCode = item.countrycode
-      if (!groups[countryCode]) {
-        groups[countryCode] = []
-      }
-      groups[countryCode].push(item)
-      return groups
-    }, {} as { [key: string]: DataItem[] })
+    return rawData.value.reduce(
+      (groups, item) => {
+        const countryCode = item.countrycode
+        if (!groups[countryCode]) {
+          groups[countryCode] = []
+        }
+        groups[countryCode].push(item)
+        return groups
+      },
+      {} as { [key: string]: DataItem[] }
+    )
   })
 
   const groupedByProduct = computed<GroupedByProduct[]>(() => {
-    const groups = rawData.value.reduce((acc, item) => {
-      if (!acc[item.product]) {
-        acc[item.product] = { 
-          product: item.product, 
-          count: 0, 
-          items: [] 
+    const groups = rawData.value.reduce(
+      (acc, item) => {
+        if (!acc[item.product]) {
+          acc[item.product] = {
+            product: item.product,
+            count: 0,
+            items: []
+          }
         }
-      }
-      acc[item.product].count++
-      acc[item.product].items.push(item)
-      return acc
-    }, {} as { [key: string]: GroupedByProduct })
+        acc[item.product].count++
+        acc[item.product].items.push(item)
+        return acc
+      },
+      {} as { [key: string]: GroupedByProduct }
+    )
 
     return Object.values(groups).sort((a, b) => b.count - a.count)
   })
@@ -51,8 +57,8 @@ export default function useDataTransformation() {
 
   const latestUpdate = computed<string>(() => {
     if (rawData.value.length === 0) return 'No data'
-    
-    const dates = rawData.value.map(item => new Date(item.date).getTime())
+
+    const dates = rawData.value.map((item) => new Date(item.date).getTime())
     const latest = new Date(Math.max(...dates))
     return latest.toLocaleDateString()
   })

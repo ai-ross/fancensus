@@ -47,7 +47,7 @@ describe('ProductTable', () => {
         groupedData: mockData
       }
     })
-    
+
     expect(screen.getByText('News')).toBeTruthy()
     expect(screen.getByText('Technology')).toBeTruthy()
   })
@@ -58,7 +58,7 @@ describe('ProductTable', () => {
         groupedData: mockData
       }
     })
-    
+
     // News has 2 activities, Technology has 1
     expect(screen.getByText('2')).toBeTruthy()
     expect(screen.getByText('1')).toBeTruthy()
@@ -70,7 +70,7 @@ describe('ProductTable', () => {
         groupedData: mockData
       }
     })
-    
+
     // Get all rows (including header)
     const rows = screen.getAllByRole('row')
     expect(rows).toHaveLength(mockData.length + 1)

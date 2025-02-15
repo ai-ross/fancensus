@@ -5,7 +5,7 @@ import type { DataItem } from '../../services/api'
 
 describe('CountryTable', () => {
   const mockData: { [key: string]: DataItem[] } = {
-    'UK': [
+    UK: [
       {
         name: 'Test Source',
         countrycode: 'UK',
@@ -14,7 +14,7 @@ describe('CountryTable', () => {
         headline: 'Test Headline'
       }
     ],
-    'US': [
+    US: [
       {
         name: 'Test Source 2',
         countrycode: 'US',
@@ -31,7 +31,7 @@ describe('CountryTable', () => {
         groupedData: mockData
       }
     })
-    
+
     expect(screen.getByText('UK')).toBeTruthy()
     expect(screen.getByText('US')).toBeTruthy()
   })
@@ -42,7 +42,7 @@ describe('CountryTable', () => {
         groupedData: mockData
       }
     })
-    
+
     // Each country has 1 activity in our mock data
     expect(screen.getAllByText('1')).toHaveLength(2)
   })
@@ -53,10 +53,10 @@ describe('CountryTable', () => {
         groupedData: mockData
       }
     })
-    
+
     const viewDetailsButton = screen.getAllByText('View Details')[0]
     await viewDetailsButton.click()
-    
+
     expect(emitted()['show-details']).toBeTruthy()
     expect(emitted()['show-details'][0]).toEqual([mockData['UK']])
   })

@@ -67,35 +67,36 @@ describe('ProductDistribution', () => {
     }
   ]
 
-  const renderComponent = (data: DataItem[]) => render(ProductDistribution, {
-    props: {
-      data
-    }
-  })
+  const renderComponent = (data: DataItem[]) =>
+    render(ProductDistribution, {
+      props: {
+        data
+      }
+    })
 
   test('renders component with correct title', () => {
     renderComponent(mockData)
-    
+
     expect(screen.getByText(/Product Distribution/i)).toBeTruthy()
   })
 
   test('renders pie chart', () => {
     renderComponent(mockData)
-    
+
     const chart = document.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
 
   test('computes chart data correctly', () => {
     renderComponent(mockData)
-    
+
     const chart = document.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
 
   test('limits to top 8 products', () => {
     renderComponent(extendedMockData)
-    
+
     const chart = document.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
@@ -106,7 +107,7 @@ describe('ProductDistribution', () => {
         data: []
       }
     })
-    
+
     const chart = container.querySelector('canvas')
     expect(chart).toBeTruthy()
   })

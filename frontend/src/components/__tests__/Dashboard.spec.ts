@@ -29,8 +29,8 @@ describe('Dashboard', () => {
   ]
 
   const mockGroupedByCountry = {
-    'UK': [mockData[0]],
-    'US': [mockData[1], mockData[2]]
+    UK: [mockData[0]],
+    US: [mockData[1], mockData[2]]
   }
 
   const mockGroupedByProduct = [
@@ -39,31 +39,32 @@ describe('Dashboard', () => {
   ]
 
   const mockCountryStats = {
-    'UK': 1,
-    'US': 2
+    UK: 1,
+    US: 2
   }
 
-  const renderDashboard = () => render(Dashboard, {
-    props: {
-      rawData: mockData,
-      groupedByCountry: mockGroupedByCountry,
-      groupedByProduct: mockGroupedByProduct,
-      countryStats: mockCountryStats
-    }
-  })
+  const renderDashboard = () =>
+    render(Dashboard, {
+      props: {
+        rawData: mockData,
+        groupedByCountry: mockGroupedByCountry,
+        groupedByProduct: mockGroupedByProduct,
+        countryStats: mockCountryStats
+      }
+    })
 
   test('renders overview stats', () => {
     renderDashboard()
-    
+
     // Use more specific queries
     const totalCountriesElement = screen.getByText(/Total Countries/i)
     const countriesValueElement = totalCountriesElement.nextElementSibling
     expect(countriesValueElement?.textContent?.trim()).toBe('2')
-  
+
     const totalProductsElement = screen.getByText(/Total Products/i)
     const productsValueElement = totalProductsElement.nextElementSibling
     expect(productsValueElement?.textContent?.trim()).toBe('2')
-  
+
     const totalActivitiesElement = screen.getByText(/Total Activities/i)
     const activitiesValueElement = totalActivitiesElement.nextElementSibling
     expect(activitiesValueElement?.textContent?.trim()).toBe('3')
@@ -71,14 +72,14 @@ describe('Dashboard', () => {
 
   test('renders tabs', () => {
     renderDashboard()
-    
+
     expect(screen.getByText(/Required Views/i)).toBeTruthy()
     expect(screen.getByText(/Additional Insights/i)).toBeTruthy()
   })
 
   test('switches between tabs', async () => {
     renderDashboard()
-    
+
     // Initial tab should be 'Required Views'
     expect(screen.getByText(/Activities by Country/i)).toBeTruthy()
 
@@ -93,7 +94,7 @@ describe('Dashboard', () => {
 
   test('opens and closes drill-down modal', async () => {
     renderDashboard()
-    
+
     // Find and click the first 'View Details' button
     const viewDetailsButtons = screen.getAllByText(/View Details/i)
     await fireEvent.click(viewDetailsButtons[0])
@@ -111,11 +112,11 @@ describe('Dashboard', () => {
 
   test('displays latest update', () => {
     renderDashboard()
-    
+
     // Check latest update date
     const latestUpdateLabel = screen.getByText(/Latest Update/i)
     const latestUpdateElement = latestUpdateLabel.nextElementSibling
-    
+
     expect(latestUpdateElement).toBeTruthy()
     expect(latestUpdateElement?.textContent).toMatch(/2024/)
   })

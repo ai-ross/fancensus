@@ -5,9 +5,9 @@ import type { CountryStats } from '../../composables/useDataTransformation'
 
 describe('CountryChart', () => {
   const mockCountryStats: CountryStats = {
-    'US': 5,
-    'UK': 3,
-    'CA': 2
+    US: 5,
+    UK: 3,
+    CA: 2
   }
 
   test('renders component', () => {
@@ -16,7 +16,7 @@ describe('CountryChart', () => {
         countryStats: mockCountryStats
       }
     })
-    
+
     expect(getByText(/Country Distribution/i)).toBeTruthy()
   })
 
@@ -26,16 +26,16 @@ describe('CountryChart', () => {
         countryStats: mockCountryStats
       }
     })
-    
+
     const chart = container.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
 
   test('handles different country stats', () => {
     const differentStats: CountryStats = {
-      'JP': 4,
-      'DE': 3,
-      'FR': 2
+      JP: 4,
+      DE: 3,
+      FR: 2
     }
 
     const { container } = render(CountryChart, {
@@ -43,7 +43,7 @@ describe('CountryChart', () => {
         countryStats: differentStats
       }
     })
-    
+
     const chart = container.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
@@ -54,7 +54,7 @@ describe('CountryChart', () => {
         countryStats: {}
       }
     })
-    
+
     const chart = container.querySelector('canvas')
     expect(chart).toBeTruthy()
   })

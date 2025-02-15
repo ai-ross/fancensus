@@ -41,7 +41,7 @@ describe('ActivityTimeline', () => {
         data: mockData
       }
     })
-    
+
     expect(getByText(/Activity Timeline/i)).toBeTruthy()
   })
 
@@ -51,7 +51,7 @@ describe('ActivityTimeline', () => {
         data: mockData
       }
     })
-    
+
     const chart = container.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
@@ -62,7 +62,7 @@ describe('ActivityTimeline', () => {
         data: mockData
       }
     })
-    
+
     const chart = container.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
@@ -73,7 +73,7 @@ describe('ActivityTimeline', () => {
         data: []
       }
     })
-    
+
     const chart = container.querySelector('canvas')
     expect(chart).toBeTruthy()
   })

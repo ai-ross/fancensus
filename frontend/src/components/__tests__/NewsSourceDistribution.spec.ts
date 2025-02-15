@@ -35,28 +35,29 @@ describe('NewsSourceDistribution', () => {
     }
   ]
 
-  const renderComponent = () => render(NewsSourceDistribution, {
-    props: {
-      data: mockData
-    }
-  })
+  const renderComponent = () =>
+    render(NewsSourceDistribution, {
+      props: {
+        data: mockData
+      }
+    })
 
   test('renders component with correct title', () => {
     renderComponent()
-    
+
     expect(screen.getByText(/Top News Sources/i)).toBeTruthy()
   })
 
   test('renders bar chart', () => {
     renderComponent()
-    
+
     const chart = document.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
 
   test('computes source distribution correctly', () => {
     renderComponent()
-    
+
     // We can't easily check exact chart contents, so we verify chart exists
     const chart = document.querySelector('canvas')
     expect(chart).toBeTruthy()
@@ -64,7 +65,7 @@ describe('NewsSourceDistribution', () => {
 
   test('handles data with multiple entries from same source', () => {
     renderComponent()
-    
+
     const chart = document.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
@@ -75,7 +76,7 @@ describe('NewsSourceDistribution', () => {
         data: []
       }
     })
-    
+
     const chart = container.querySelector('canvas')
     expect(chart).toBeTruthy()
   })
